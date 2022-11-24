@@ -3,6 +3,8 @@ import { Pool, RowDataPacket } from 'mysql2/promise';
 
 import { ISQLDatabase } from '../Interfaces/DB';
 import { logger } from '../../Utils';
+import { DatabaseError } from '../../Errors';
+import { mysqlErrorMapper } from '../../Utils/DB/Error';
 
 type MySQLConnectionConfig = {
   host: string | undefined
@@ -25,9 +27,9 @@ export class MySQLConnection implements ISQLDatabase {
     try {
       const [rows] = await client.query<[K & RowDataPacket[]]>(query, values);
       return rows[0];
-    } catch (err) {
+    } catch (err: any) {
       if (process.env.NODE_ENV === 'development') logger(err);
-      throw err;
+      throw new DatabaseError(err.message, mysqlErrorMapper(err.errno), 'mysql', err.errno);
     } finally {
       client.release();
     }

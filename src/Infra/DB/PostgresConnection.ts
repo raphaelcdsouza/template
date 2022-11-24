@@ -2,6 +2,8 @@ import { Pool, QueryResultRow } from 'pg';
 
 import { ISQLDatabase } from '../Interfaces/DB';
 import { logger } from '../../Utils';
+import { DatabaseError } from '../../Errors';
+import { postgresErrorMapper } from '../../Utils/DB/Error';
 
 type PGConnectionConfig = {
   host: string | undefined
@@ -24,9 +26,9 @@ export class PostgresConnection implements ISQLDatabase<QueryResultRow> {
     try {
       const { rows } = await client.query<K>(query, values);
       return rows[0];
-    } catch (err) {
+    } catch (err: any) {
       if (process.env.NODE_ENV === 'development') logger(err);
-      throw err;
+      throw new DatabaseError(err.message, postgresErrorMapper(err.code), 'postgres', err.code);
     } finally {
       client.release();
     }
