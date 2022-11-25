@@ -4,19 +4,12 @@ import { ISQLDatabase } from '../Interfaces/DB';
 import { logger } from '../../Utils';
 import { DatabaseError } from '../../Errors';
 import { postgresErrorMapper } from '../../Utils/DB/Error';
-
-type PGConnectionConfig = {
-  host: string | undefined
-  port: number
-  user: string | undefined
-  password: string | undefined
-  database: string | undefined
-}
+import { SQLConnectionConfigType } from '../Types/DB';
 
 export class PostgresConnection implements ISQLDatabase<QueryResultRow> {
   private pool: Pool;
 
-  constructor(config: PGConnectionConfig) {
+  constructor(config: SQLConnectionConfigType) {
     this.pool = new Pool({ ...config });
   }
 

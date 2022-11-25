@@ -5,19 +5,12 @@ import { ISQLDatabase } from '../Interfaces/DB';
 import { logger } from '../../Utils';
 import { DatabaseError } from '../../Errors';
 import { mysqlErrorMapper } from '../../Utils/DB/Error';
-
-type MySQLConnectionConfig = {
-  host: string | undefined
-  port: number
-  user: string | undefined
-  password: string | undefined
-  database: string | undefined
-}
+import { SQLConnectionConfigType } from '../Types/DB';
 
 export class MySQLConnection implements ISQLDatabase {
   private pool: Pool;
 
-  constructor(config: MySQLConnectionConfig) {
+  constructor(config: SQLConnectionConfigType) {
     this.pool = mysql.createPool(config).promise();
   }
 
