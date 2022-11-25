@@ -14,12 +14,12 @@ export class MySQLConnection implements ISQLDatabase {
     this.pool = mysql.createPool(config).promise();
   }
 
-  public async query <K>(query: string, values?: any[]): Promise<K> {
+  public async query <K>(query: string, values?: any[]): Promise<K[]> {
     const client = await this.pool.getConnection();
 
     try {
       const [rows] = await client.query<[K & RowDataPacket[]]>(query, values);
-      return rows[0];
+      return rows;
     } catch (err: any) {
       if (process.env.NODE_ENV === 'development') logger(err);
       throw new DatabaseError(err.message, mysqlErrorMapper(err.errno), 'mysql', err.errno);
