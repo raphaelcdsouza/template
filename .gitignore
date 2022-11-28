@@ -1,6 +1,7 @@
 # Directories
 node_modules
 dist
+coverage
 
 # Yarn
 yarn-error.log
