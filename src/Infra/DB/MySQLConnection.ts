@@ -1,5 +1,5 @@
-import mysql from 'mysql2';
-import { Pool, RowDataPacket } from 'mysql2/promise';
+// import mysql from 'mysql2';
+import { Pool, RowDataPacket, createPool } from 'mysql2/promise';
 
 import { ISQLDatabase } from '../Interfaces/DB';
 import { logger } from '../../Utils';
@@ -11,7 +11,7 @@ export class MySQLConnection implements ISQLDatabase {
   private pool: Pool;
 
   constructor(config: SQLConnectionConfigType) {
-    this.pool = mysql.createPool(config).promise();
+    this.pool = createPool(config);
   }
 
   public async query <K>(query: string, values?: any[]): Promise<K[]> {
