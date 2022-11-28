@@ -5,8 +5,7 @@
     "moduleResolution": "node",
     "declaration": true,
     "rootDirs": [
-      "src",
-      "tests"
+      "src"
     ],
     "typeRoots": [
       "./node_modules/@types",
