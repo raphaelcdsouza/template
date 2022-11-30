@@ -1,1 +1,2 @@
-console.log('Hello TypeScript template!');
+export * from './Infra/Facades';
+export * from './Utils';
