@@ -12,7 +12,7 @@
       "./@types"
     ],
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
